@@ -70,6 +70,7 @@ const HeroSlider = () => {
                   src={slides[currentSlide].image} 
                   alt={slides[currentSlide].title} 
                   className="w-full h-full object-cover grayscale opacity-20"
+                  priority={true} // Optimize LCP
                 />
              </motion.div>
              <div className="absolute inset-0 bg-bg/10"></div>

@@ -6,9 +6,16 @@ interface BrutalistImageProps {
   alt: string;
   className?: string;
   fallbackText?: string;
+  priority?: boolean; // New prop to control loading behavior
 }
 
-const BrutalistImage: React.FC<BrutalistImageProps> = ({ src, alt, className = "", fallbackText }) => {
+const BrutalistImage: React.FC<BrutalistImageProps> = ({ 
+  src, 
+  alt, 
+  className = "", 
+  fallbackText,
+  priority = false
+}) => {
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -38,11 +45,12 @@ const BrutalistImage: React.FC<BrutalistImageProps> = ({ src, alt, className = "
       <motion.img 
         src={src} 
         alt={alt}
+        loading={priority ? "eager" : "lazy"}
         className={`w-full h-full object-cover transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
-        initial={{ scale: 1.1, filter: 'grayscale(100%)' }}
-        whileInView={{ scale: 1, filter: 'grayscale(0%)' }}
+        initial={priority ? { opacity: 1 } : { scale: 1.1, filter: 'grayscale(100%)' }}
+        whileInView={priority ? undefined : { scale: 1, filter: 'grayscale(0%)' }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       />
