@@ -21,15 +21,13 @@
                 50: '#FEF6F9',
                 100: '#FDECF2',
                 200: '#FADAE7',
-                300: 'var(--color-pink)', // Dynamic Variable
+                300: '#F7C1D9', // Fixed Pink Reference
                 400: '#F3A4C8',
-                500: '#E08EB5',
-                600: '#D8629B',
-                700: '#B74980',
-                800: '#8F2F63',
-                900: '#5D1A3F',
               },
-              black: 'var(--color-black)', // Dynamic Variable
+              // Semantic Colors mapped to CSS Variables
+              bg: 'var(--color-bg)',
+              contrast: 'var(--color-text)',
+              accent: 'var(--color-accent)',
             },
             fontFamily: {
               sans: ['Outfit', 'sans-serif'],
@@ -38,34 +36,23 @@
               DEFAULT: '0px',
               'none': '0px',
             },
-            animation: {
-              'marquee': 'marquee 25s linear infinite',
-              'marquee2': 'marquee2 25s linear infinite',
-              'spin-slow': 'spin 8s linear infinite',
-            },
-            keyframes: {
-              marquee: {
-                '0%': { transform: 'translateX(0%)' },
-                '100%': { transform: 'translateX(-100%)' },
-              },
-              marquee2: {
-                '0%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(0%)' },
-              },
-            }
           }
         }
       }
     </script>
     <style>
+      /* LIGHT MODE (Default) - White Based */
       :root {
-        --color-pink: #F7C1D9;
-        --color-black: #0a0a0a;
+        --color-bg: #FFFFFF;
+        --color-text: #000000;
+        --color-accent: #F7C1D9; /* Pink */
       }
       
+      /* DARK MODE (Inverse) - Black Based */
       :root[data-theme="inverse"] {
-        --color-pink: #0a0a0a;
-        --color-black: #F7C1D9;
+        --color-bg: #050505;
+        --color-text: #F7C1D9; /* Pink Text */
+        --color-accent: #000000;
       }
 
       /* Smooth scrolling */
@@ -80,18 +67,17 @@
       
       /* Custom Scrollbar - Minimal */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: var(--color-black); 
+        background: var(--color-bg); 
       }
       ::-webkit-scrollbar-thumb {
-        background: var(--color-pink); 
-        border: 1px solid var(--color-black);
+        background: var(--color-text); 
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #fff; 
+        background: var(--color-accent); 
       }
 
       /* Film Grain Overlay */
@@ -103,7 +89,7 @@
         height: 100%;
         pointer-events: none;
         z-index: 9999;
-        opacity: 0.05;
+        opacity: 0.04;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
     </style>
@@ -121,7 +107,7 @@
 }
 </script>
 </head>
-  <body class="bg-brand-300 text-black font-sans selection:bg-black selection:text-brand-300 transition-colors duration-500">
+  <body class="bg-bg text-contrast font-sans selection:bg-contrast selection:text-bg transition-colors duration-700">
     <div id="root"></div>
   </body>
 </html>

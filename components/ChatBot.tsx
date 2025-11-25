@@ -45,13 +45,13 @@ const ChatBot: React.FC = () => {
       const juiceContext = LIFE_JUICES.map(item => `${item.name} (${item.price} MAD): ${item.ingredients.join(', ')}`).join('\n');
       
       const systemPrompt = `
-        You are the brand AI for Waffles&Co, a brutalist-minimal café in Tangier, Morocco.
+        You are the brand AI for Waffles&Co, a brutalist-minimal coffee shop and kitchen in Tangier, Morocco.
         Tone: Cool, minimal, direct, slightly bold, friendly but not "cute". Use emojis sparingly.
         
         Brand Info:
         - Location: Rue de la Liberté, 25, Tangier.
         - Hours: 09:00 - 22:00 Daily.
-        - Vibe: Creative studio x Café. Indulgence meets Vitality.
+        - Vibe: Modern Café x Kitchen. Indulgence meets Vitality.
         - Key Products: Bubble Waffles, Churros, Cold-pressed LIFE Juices.
         
         Menu:
@@ -70,7 +70,7 @@ const ChatBot: React.FC = () => {
         ]
       });
 
-      const text = response.text || "Sorry, I'm having trouble connecting to the studio right now.";
+      const text = response.text || "Sorry, I'm having trouble connecting to the shop right now.";
       setMessages(prev => [...prev, { role: 'model', text }]);
 
     } catch (error) {

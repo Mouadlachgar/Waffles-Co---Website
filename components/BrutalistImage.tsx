@@ -12,37 +12,18 @@ const BrutalistImage: React.FC<BrutalistImageProps> = ({ src, alt, className = "
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  // Generate a random pattern type based on alt text length (deterministic for same alt)
-  const patternType = alt.length % 3;
+  // Use a reliable backup texture image if the main image fails
+  const fallbackImage = "https://images.unsplash.com/photo-1550951298-5c7b95a66b90?q=80&w=800&auto=format&fit=crop";
 
   if (error) {
     return (
-      <div className={`relative overflow-hidden bg-brand-300 flex items-center justify-center border border-black/10 ${className}`}>
-        {/* Fallback Patterns */}
-        {patternType === 0 && (
-           <div className="absolute inset-0" style={{
-              backgroundImage: 'linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000)',
-              backgroundSize: '20px 20px',
-              backgroundPosition: '0 0, 10px 10px',
-              opacity: 0.1
-           }}></div>
-        )}
-        {patternType === 1 && (
-           <div className="absolute inset-0" style={{
-              backgroundImage: 'radial-gradient(circle, #000 2px, transparent 2.5px)',
-              backgroundSize: '16px 16px',
-              opacity: 0.15
-           }}></div>
-        )}
-        {patternType === 2 && (
-           <div className="absolute inset-0 flex flex-col justify-between p-2">
-             {Array.from({length: 10}).map((_, i) => (
-                <div key={i} className="h-px bg-black/20 w-full"></div>
-             ))}
-           </div>
-        )}
-        
-        <div className="z-10 bg-black text-brand-300 px-4 py-2 text-xs font-bold uppercase tracking-widest rotate-3 border border-brand-300 shadow-[4px_4px_0px_0px_rgba(247,193,217,1)]">
+       <div className={`relative overflow-hidden bg-bg flex items-center justify-center border border-contrast/10 ${className}`}>
+        <img 
+          src={fallbackImage} 
+          alt="Texture" 
+          className="absolute inset-0 w-full h-full object-cover grayscale opacity-50" 
+        />
+        <div className="z-10 bg-contrast text-bg px-4 py-2 text-xs font-bold uppercase tracking-widest rotate-3 border border-bg shadow-lg">
            {fallbackText || alt}
         </div>
       </div>
@@ -52,7 +33,7 @@ const BrutalistImage: React.FC<BrutalistImageProps> = ({ src, alt, className = "
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {!loaded && (
-        <div className="absolute inset-0 bg-brand-200 animate-pulse z-10"></div>
+        <div className="absolute inset-0 bg-contrast/5 animate-pulse z-10"></div>
       )}
       <motion.img 
         src={src} 

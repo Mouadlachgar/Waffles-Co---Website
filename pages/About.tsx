@@ -26,17 +26,17 @@ const About: React.FC = () => {
               </h2>
               <div className="space-y-12 text-lg lg:text-xl font-light leading-relaxed max-w-xl">
                 <p>
-                  <span className="font-black">Waffles&Co</span> started as a rebellion against the boring café. We wanted the best waffles in the city, but we also wanted juice that actually did something for your body.
+                  <span className="font-black">Waffles&Co</span> started as a rebellion against the boring coffee chain. We wanted the best waffles in the city, but we also wanted juice that actually did something for your body.
                 </p>
                 <p>
-                  So we built a <span className="font-bold">creative studio</span> that serves food. No compromise. No soft edges.
+                  So we built a <span className="font-bold">modern coffee shop</span> that serves food. No compromise. No soft edges.
                 </p>
                 <p>
                   Our kitchen is open. Our ingredients are transparent. Our vibe is <span className="font-black uppercase tracking-wider">loud</span>.
                 </p>
                 <div className="pt-8">
                    <Link to="/contact">
-                     <Button variant="secondary">Visit The Studio</Button>
+                     <Button variant="secondary">Visit The Shop</Button>
                    </Link>
                 </div>
               </div>
@@ -52,7 +52,7 @@ const About: React.FC = () => {
                  alt="Interior"
                />
                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                   <span className="font-black text-6xl uppercase text-brand-300">Studio</span>
+                   <span className="font-black text-6xl uppercase text-brand-300">Space</span>
                </div>
             </ScrollReveal>
             <ScrollReveal direction="left" delay={200} className="h-[50vh] relative p-12 flex items-center justify-center bg-black">

@@ -19,7 +19,7 @@ const Contact: React.FC = () => {
              
              <div className="space-y-12 mb-12">
                 <div className="border-l border-brand-300 pl-6 hover:pl-8 transition-all">
-                   <h3 className="text-[10px] font-sans text-brand-300/60 uppercase tracking-widest mb-2 font-bold">Studio</h3>
+                   <h3 className="text-[10px] font-sans text-brand-300/60 uppercase tracking-widest mb-2 font-bold">Location</h3>
                    <p className="text-2xl font-light uppercase">Rue de la Liberté, 25<br/>90000 Tangier</p>
                 </div>
                 <div className="border-l border-brand-300 pl-6 hover:pl-8 transition-all">
