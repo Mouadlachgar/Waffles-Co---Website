@@ -23,7 +23,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({ children }) => {
   return (
     <section className="bg-black text-brand-300 border-b border-brand-300/30 py-24 relative group transition-colors duration-500">
       <div className="container mx-auto px-6 mb-8 flex justify-between items-end">
-          <h2 className="text-xl font-bold uppercase tracking-widest font-sans">Inside The Café</h2>
+          <h2 className="text-xl font-bold uppercase tracking-widest font-sans">Inside The Studio</h2>
           <div className="flex gap-4">
               <button 
                 onClick={scrollLeft}

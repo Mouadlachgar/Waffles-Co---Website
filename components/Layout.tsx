@@ -6,48 +6,55 @@ import ChatBot from './ChatBot';
 import Logo from './Logo';
 
 const Preloader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
+  const [text, setText] = useState('WAFFLES');
   const [isVisible, setIsVisible] = useState(true);
-  const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {
-    // Fade In
-    setTimeout(() => setOpacity(1), 100);
+    // A more rapid, glitch-like typographic sequence
+    const words = ['CRUNCH', 'SIP', 'REPEAT', 'WAFFLES', '&', 'CO', 'TANGIER'];
+    let index = 0;
 
-    // Hold then Fade Out
-    const timer = setTimeout(() => {
-      setOpacity(0);
+    const interval = setInterval(() => {
+      index = (index + 1) % words.length;
+      setText(words[index]);
+    }, 180); // Faster cycle
+
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      setText("WAFFLES & CO"); // Land on final brand name
       setTimeout(() => {
-        setIsVisible(false);
-        onComplete();
-      }, 1000); // Wait for fade out
-    }, 2000);
+          setIsVisible(false);
+          setTimeout(onComplete, 600); 
+      }, 800);
+    }, 2200);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, [onComplete]);
 
   if (!isVisible) return null;
 
   return (
-    <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out`} style={{ opacity }}>
-      <div className="flex flex-col items-center">
-        <h1 className="text-brand-300 font-black text-[10vw] md:text-[5vw] leading-none tracking-tighter uppercase font-sans animate-pulse">
-          WAFFLES & CO
-        </h1>
-        <span className="text-brand-300 font-light tracking-[0.5em] text-xs mt-4 uppercase">Coffee & Kitchen</span>
-      </div>
+    <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-all duration-700 ease-out ${isVisible ? 'opacity-100' : 'opacity-0 -translate-y-full'}`}>
+      <h1 className="text-brand-300 font-black text-[15vw] leading-none tracking-tighter uppercase font-sans animate-pulse">
+        {text}
+      </h1>
     </div>
   );
 };
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // Default to true for Dark Mode (Inverse) as initial state
   const [isInverse, setIsInverse] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     setIsOpen(false);
+    // Ensure the DOM matches the initial state
     const root = document.documentElement;
-    // Check local storage or default to inverse
     if (root.getAttribute('data-theme') === 'inverse') {
         setIsInverse(true);
     } else {
@@ -75,11 +82,11 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] bg-bg border-b border-contrast/10 transition-colors duration-500 h-[80px] flex items-center">
+    <nav className="fixed top-0 left-0 w-full z-[100] bg-brand-300 border-b border-black transition-colors duration-500 h-[80px] flex items-center">
       <div className="w-full px-6 lg:px-8 flex justify-between items-center relative">
         {/* Logo */}
-        <Link to="/" className="group flex items-center text-contrast hover:opacity-70 transition-opacity">
-          <Logo className="text-3xl lg:text-4xl text-contrast" />
+        <Link to="/" className="group flex items-center text-black hover:opacity-70 transition-opacity">
+          <Logo className="text-3xl lg:text-4xl" />
         </Link>
 
         {/* Desktop Menu */}
@@ -88,8 +95,8 @@ const Navbar: React.FC = () => {
             <Link
               key={link.name}
               to={link.path}
-              className={`text-sm font-bold uppercase tracking-widest hover:text-contrast/60 transition-colors font-sans ${
-                location.pathname === link.path ? 'underline underline-offset-4 decoration-2 decoration-accent' : 'text-contrast'
+              className={`text-sm font-bold uppercase tracking-widest hover:text-black/60 transition-colors font-sans ${
+                location.pathname === link.path ? 'underline underline-offset-4 decoration-2' : 'text-black'
               }`}
             >
               {link.name}
@@ -99,7 +106,7 @@ const Navbar: React.FC = () => {
           {/* Theme Toggle */}
           <button 
             onClick={toggleTheme} 
-            className="text-contrast hover:opacity-60 transition-opacity p-2 border border-contrast/20 rounded-full"
+            className="text-black hover:opacity-60 transition-opacity p-2 border border-black/20 rounded-full"
             aria-label="Toggle Contrast"
           >
              {isInverse ? <Sun size={18} /> : <Moon size={18} />}
@@ -109,7 +116,7 @@ const Navbar: React.FC = () => {
         {/* CTA */}
         <div className="hidden md:block">
            <Link to="/menu">
-             <Button variant="outline" size="sm">Order Online</Button>
+             <Button variant="secondary" size="sm">Order Online</Button>
            </Link>
         </div>
 
@@ -117,12 +124,12 @@ const Navbar: React.FC = () => {
         <div className="flex items-center gap-4 md:hidden">
             <button 
                 onClick={toggleTheme} 
-                className="text-contrast hover:opacity-60 transition-opacity p-2"
+                className="text-black hover:opacity-60 transition-opacity p-2"
             >
              {isInverse ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button 
-            className="text-contrast p-1"
+            className="text-black p-1"
             onClick={() => setIsOpen(!isOpen)}
             >
             {isOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
@@ -132,18 +139,18 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-bg h-[calc(100vh-80px)] flex flex-col p-6 border-t border-contrast animate-in slide-in-from-top-5 z-[100] transition-colors duration-500">
+        <div className="absolute top-full left-0 w-full bg-brand-300 h-[calc(100vh-80px)] flex flex-col p-6 border-t border-black animate-in slide-in-from-top-5 z-[100] transition-colors duration-500">
            {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              className="text-5xl font-black text-contrast uppercase tracking-tight py-4 border-b border-contrast/10 hover:pl-4 transition-all font-sans"
+              className="text-5xl font-black text-black uppercase tracking-tight py-4 border-b border-black/10 hover:pl-4 transition-all font-sans"
             >
               {link.name}
             </Link>
           ))}
           <div className="mt-auto pb-8">
-            <Button fullWidth size="lg" variant="primary">Order Online</Button>
+            <Button fullWidth size="lg">Order Online</Button>
           </div>
         </div>
       )}
@@ -153,29 +160,29 @@ const Navbar: React.FC = () => {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-contrast text-bg border-t border-contrast overflow-hidden transition-colors duration-500">
+    <footer className="bg-black text-brand-300 border-t border-brand-300 overflow-hidden transition-colors duration-500">
       {/* Massive Brand Name */}
-      <div className="border-b border-bg/20 py-12 md:py-24 px-6 overflow-hidden flex justify-center">
-         <Logo className="text-[12vw] leading-none text-bg" />
+      <div className="border-b border-brand-300 py-12 md:py-24 px-6 overflow-hidden flex justify-center">
+         <Logo className="text-[12vw] leading-none text-brand-300" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[400px]">
          {/* Column 1: Manifesto */}
-         <div className="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-bg/20 flex flex-col justify-between">
+         <div className="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-brand-300 flex flex-col justify-between">
             <div className="mb-12">
-               <p className="font-sans text-xs uppercase tracking-widest opacity-80 leading-relaxed max-w-xs text-bg">
+               <p className="font-sans text-xs uppercase tracking-widest opacity-80 leading-relaxed max-w-xs">
                   Est. 2024 Tangier.<br/>
                   Dedicated to the art of indulgence and the science of vitality.
                </p>
             </div>
-            <div className="font-sans text-sm uppercase tracking-widest font-bold text-bg">
+            <div className="font-sans text-sm uppercase tracking-widest font-bold">
                &copy; 2025 All Rights Reserved.
             </div>
          </div>
 
          {/* Column 2: Navigation Links */}
-         <div className="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-bg/20">
-            <h3 className="font-sans text-xs uppercase tracking-widest mb-8 border-b border-bg/20 pb-2 w-fit text-bg">Index</h3>
+         <div className="lg:col-span-4 p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-brand-300">
+            <h3 className="font-sans text-xs uppercase tracking-widest mb-8 border-b border-brand-300 pb-2 w-fit">Index</h3>
             <ul className="space-y-4">
                {[
                   { name: 'Menu', path: '/menu' },
@@ -185,7 +192,7 @@ const Footer: React.FC = () => {
                   { name: 'Press', path: '#' }
                ].map((item, idx) => (
                   <li key={idx}>
-                     <Link to={item.path} className="text-3xl font-thin uppercase hover:pl-4 transition-all flex items-center group font-sans text-bg">
+                     <Link to={item.path} className="text-3xl font-thin uppercase hover:pl-4 transition-all flex items-center group font-sans">
                         {item.name}
                         <ArrowUpRight className="opacity-0 group-hover:opacity-100 ml-2 transition-opacity" size={20} />
                      </Link>
@@ -195,15 +202,15 @@ const Footer: React.FC = () => {
          </div>
 
          {/* Column 3: Newsletter / Connect */}
-         <div className="lg:col-span-4 p-8 md:p-12 flex flex-col justify-between bg-bg text-contrast transition-colors duration-500">
+         <div className="lg:col-span-4 p-8 md:p-12 flex flex-col justify-between bg-brand-300 text-black transition-colors duration-500">
             <div>
-               <h3 className="font-sans text-xs uppercase tracking-widest mb-8 border-b border-contrast pb-2 w-fit font-bold">Stay Close</h3>
+               <h3 className="font-sans text-xs uppercase tracking-widest mb-8 border-b border-black pb-2 w-fit font-bold">Stay Close</h3>
                <p className="text-xl font-light mb-8 leading-tight font-sans">
-                  Join the inner circle. Secret menu drops and café updates.
+                  Join the inner circle. Secret menu drops and studio updates.
                </p>
-               <form className="flex border-b border-contrast pb-2">
-                  <input type="email" placeholder="EMAIL ADDRESS" className="bg-transparent w-full outline-none placeholder-contrast/50 font-sans uppercase text-sm text-contrast" />
-                  <button type="button" className="font-bold uppercase text-sm hover:opacity-60 font-sans text-contrast">Join</button>
+               <form className="flex border-b border-black pb-2">
+                  <input type="email" placeholder="EMAIL ADDRESS" className="bg-transparent w-full outline-none placeholder-black/50 font-sans uppercase text-sm" />
+                  <button type="button" className="font-bold uppercase text-sm hover:opacity-60 font-sans">Join</button>
                </form>
             </div>
             
@@ -211,7 +218,7 @@ const Footer: React.FC = () => {
                <h3 className="font-sans text-xs uppercase tracking-widest mb-4 font-bold">Social</h3>
                <div className="flex gap-4">
                   {['Instagram', 'TikTok', 'Spotify'].map((social) => (
-                     <a key={social} href="#" className="border border-contrast px-4 py-2 rounded-full text-xs font-bold uppercase hover:bg-contrast hover:text-bg transition-colors font-sans">
+                     <a key={social} href="#" className="border border-black px-4 py-2 rounded-full text-xs font-bold uppercase hover:bg-black hover:text-brand-300 transition-colors font-sans">
                         {social}
                      </a>
                   ))}
@@ -224,23 +231,14 @@ const Footer: React.FC = () => {
 };
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [showPreloader, setShowPreloader] = useState(false);
-
-  useEffect(() => {
-    // Check if user has visited in this session
-    const hasVisited = sessionStorage.getItem('waffles_visited');
-    if (!hasVisited) {
-      setShowPreloader(true);
-      sessionStorage.setItem('waffles_visited', 'true');
-    }
-  }, []);
+  const [loading, setLoading] = useState(true);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-bg selection:bg-contrast selection:text-bg transition-colors duration-700">
-      {showPreloader && <Preloader onComplete={() => setShowPreloader(false)} />}
+    <div className="min-h-screen flex flex-col font-sans bg-brand-300 selection:bg-black selection:text-brand-300 transition-colors duration-500">
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
       <div className="film-grain"></div>
       <Navbar />
-      <main className={`flex-grow pt-[80px] transition-opacity duration-1000 ${showPreloader ? 'opacity-0' : 'opacity-100'}`}>
+      <main className={`flex-grow pt-[80px] transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}>
         {children}
       </main>
       <Footer />

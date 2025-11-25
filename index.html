@@ -4,26 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- SEO & Metatags -->
-    <title>WAFFLES&CO | Coffee & Kitchen - Tangier</title>
-    <meta name="description" content="A brutalist-minimal café in Tangier serving indulgent waffles, churros, and cold-pressed LIFE juices. Indulgence meets vitality." />
-    <meta name="keywords" content="Waffles, Coffee Shop, Tangier, Morocco, Cold Pressed Juice, Brutalist Design, Café" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://wafflesandco.ma/" />
-    <meta property="og:title" content="WAFFLES&CO | Coffee & Kitchen" />
-    <meta property="og:description" content="Indulgence meets Vitality. Modern coffee shop & kitchen in Tangier, Morocco." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://wafflesandco.ma/" />
-    <meta property="twitter:title" content="WAFFLES&CO | Coffee & Kitchen" />
-    <meta property="twitter:description" content="Indulgence meets Vitality. Modern coffee shop & kitchen in Tangier, Morocco." />
-    <meta property="twitter:image" content="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop" />
-
+    <title>WAFFLES&CO - Tangier</title>
     <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,13 +21,15 @@
                 50: '#FEF6F9',
                 100: '#FDECF2',
                 200: '#FADAE7',
-                300: '#F7C1D9', // Fixed Pink Reference
+                300: 'var(--color-pink)',
                 400: '#F3A4C8',
+                500: '#E08EB5',
+                600: '#D8629B',
+                700: '#B74980',
+                800: '#8F2F63',
+                900: '#5D1A3F',
               },
-              // Semantic Colors mapped to CSS Variables
-              bg: 'var(--color-bg)',
-              contrast: 'var(--color-text)',
-              accent: 'var(--color-accent)',
+              black: 'var(--color-black)',
             },
             fontFamily: {
               sans: ['Outfit', 'sans-serif'],
@@ -55,79 +38,58 @@
               DEFAULT: '0px',
               'none': '0px',
             },
+            animation: {
+              'spin-slow': 'spin 12s linear infinite',
+            }
           }
         }
       }
     </script>
     <style>
-      /* LIGHT MODE (Default) - White Based */
       :root {
-        --color-bg: #FFFFFF;
-        --color-text: #050505;
-        --color-accent: #F7C1D9; /* Pink */
+        --color-pink: #F7C1D9;
+        --color-black: #0a0a0a;
       }
       
-      /* DARK MODE (Inverse) - Black Based */
       :root[data-theme="inverse"] {
-        --color-bg: #050505;
-        --color-text: #F7C1D9; /* Pink Text */
-        --color-accent: #FFFFFF;
+        --color-pink: #0a0a0a;
+        --color-black: #F7C1D9;
       }
 
-      /* Smooth scrolling */
-      html {
-        scroll-behavior: smooth;
-      }
+      html { scroll-behavior: smooth; }
       body {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
       }
       
-      /* Custom Scrollbar - Minimal */
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: var(--color-bg); 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: var(--color-text); 
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-accent); 
-      }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: var(--color-black); }
+      ::-webkit-scrollbar-thumb { background: var(--color-pink); }
 
-      /* Film Grain Overlay */
       .film-grain {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9999;
-        opacity: 0.04;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: 9000; opacity: 0.04;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
     </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
     "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
     "framer-motion": "https://aistudiocdn.com/framer-motion@^11.13.1",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
   }
 }
 </script>
-</head>
-  <body class="bg-bg text-contrast font-sans selection:bg-contrast selection:text-bg transition-colors duration-700">
+  </head>
+  <body class="bg-brand-300 text-black font-sans selection:bg-black selection:text-brand-300 transition-colors duration-500">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
