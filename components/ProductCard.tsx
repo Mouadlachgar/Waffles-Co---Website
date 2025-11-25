@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Plus, ShoppingBag } from 'lucide-react';
+import React from 'react';
+import { Plus } from 'lucide-react';
 import { MenuItem } from '../types';
 import BrutalistImage from './BrutalistImage';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface ProductCardProps {
   item: MenuItem;
@@ -11,14 +11,6 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, variant = 'light' }) => {
   const isDark = variant === 'dark';
-  const [isAdded, setIsAdded] = useState(false);
-
-  const handleAddToCart = () => {
-    setIsAdded(true);
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 2000);
-  };
   
   return (
     <motion.div 
@@ -31,15 +23,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, variant = 'light' }) =>
         ? 'bg-black text-brand-300' 
         : 'bg-brand-300 text-black border border-black'
     }`}>
-      {/* Image Container with Zoom Effect */}
-      <div className="relative aspect-[4/5] border-b border-black/10 overflow-hidden">
-        <div className="w-full h-full transition-transform duration-700 ease-in-out group-hover:scale-110">
-          <BrutalistImage 
-            src={item.image} 
-            alt={item.name} 
-            className="w-full h-full"
-          />
-        </div>
+      {/* Image Container with Fallback */}
+      <div className="relative aspect-[4/5] border-b border-black/10">
+        <BrutalistImage 
+          src={item.image} 
+          alt={item.name} 
+          className="w-full h-full"
+        />
         {/* Overlay on hover */}
         <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${isDark ? 'bg-brand-300' : 'bg-black'}`}></div>
       </div>
@@ -61,37 +51,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, variant = 'light' }) =>
           </span>
           
           <button 
-            onClick={handleAddToCart}
-            className={`w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 relative overflow-hidden ${
+            className={`w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${
               isDark 
                 ? 'border-brand-300 text-brand-300 hover:bg-brand-300 hover:text-black' 
                 : 'border-black text-black hover:bg-black hover:text-brand-300'
             }`}
-            aria-label={isAdded ? "Added to cart" : "Add to cart"}
+            aria-label="Add to cart"
           >
-            <AnimatePresence mode="wait">
-              {isAdded ? (
-                <motion.div
-                  key="bag"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ShoppingBag size={14} strokeWidth={2} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="plus"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Plus size={16} strokeWidth={1} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <Plus size={16} strokeWidth={1} />
           </button>
         </div>
       </div>
